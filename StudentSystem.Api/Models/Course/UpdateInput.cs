@@ -1,16 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StudentSystem.EntityFramework.Core;
 
-namespace StudentSystem.EntityFramework.Core
+namespace StudentSystem.Api.Models.Course
 {
-    /// <summary>
-    /// 课程表
-    /// </summary>
-    public class Course : Entity<long>
+    public class UpdateInput
     {
         /// <summary>
         /// 课程名称
         /// </summary>
-        [StringLength(50)]
         public string CourseName { get; set; }
 
         /// <summary>
@@ -26,7 +22,6 @@ namespace StudentSystem.EntityFramework.Core
         /// <summary>
         /// 介绍
         /// </summary>
-        [StringLength(500)]
         public string Introduction { get; set; }
 
         /// <summary>
@@ -38,6 +33,5 @@ namespace StudentSystem.EntityFramework.Core
         /// 人数限制
         /// </summary>
         public int PersonLimit { get; set; }
-
     }
 }

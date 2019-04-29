@@ -15,8 +15,13 @@ namespace StudentSystem.Api.Controllers.Api
     [RoutePrefix("Api/Auth")]
     public class AuthController : BaseApiController
     {
-        [Route("Login"), HttpGet, AllowAnonymous]
-        public async Task<Result> Login([FromUri]LoginInput input)
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Route("Login"), HttpPost, AllowAnonymous]
+        public async Task<Result> Login([FromBody]LoginInput input)
         {
             using (var db = new ManageServerDbContext())
             {
@@ -31,10 +36,30 @@ namespace StudentSystem.Api.Controllers.Api
                     userInfo.UserId = user.Id;
                     userInfo.UserName = user.UserName;
                     cache.Insert(token, userInfo);
+
                     LoginOutput loginOutput = new LoginOutput();
-                    loginOutput.Name = user.Name; 
+
+                    if (input.UserType == EntityFramework.Core.UserType.Student)
+                    {
+                        var student = db.Students.FirstOrDefault(x => x.UserId == user.Id);
+                        loginOutput.UserNo = student.StudentNo;
+                        loginOutput.Professional = student.Professional;
+                        loginOutput.ShouldScore = student.ShouldScore;
+                        loginOutput.RealScore = student.RealScore;
+                    }
+                    else if (input.UserType == EntityFramework.Core.UserType.Teacher)
+                    {
+                        var teacher = db.Teachers.FirstOrDefault(x => x.UserId == user.Id);
+                        loginOutput.UserNo = teacher.TeacherNo;
+                        loginOutput.Professional = teacher.Professional;
+                        loginOutput.TeacherRank = teacher.TeacherRank;
+                    }
+                    loginOutput.IdCard = user.IdCard;
+                    loginOutput.Phone = user.Phone;
+                    loginOutput.Email = user.Email;
+                    loginOutput.Gender = user.Gender;
+                    loginOutput.Name = user.Name;
                     loginOutput.Token = token;
-                    loginOutput.UserId = user.Id;
                     loginOutput.UserName = user.UserName;
                     loginOutput.UserType = user.UserType;
                     return Result.Ok(loginOutput);
@@ -46,11 +71,51 @@ namespace StudentSystem.Api.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// 登出
+        /// </summary>
+        /// <returns></returns>
         [Route("Logout"), HttpGet]
         public async Task<Result> Logout()
         {
             return Result.Ok();
         }
 
+        /// <summary>
+        /// 变更个人信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Route("ChangeUser"), HttpPost]
+        public async Task<Result> ChangeUser([FromBody]ChangeUserInput input)
+        {
+            using (var db = new ManageServerDbContext())
+            {
+                var userInfo = base.GetUserInfo();
+                var user = db.Users.FirstOrDefault(x => x.Id == userInfo.UserId);
+                user.Email = input.Email;
+                user.Phone = input.Phone;
+                db.SaveChanges();
+            }
+            return Result.Ok();
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Route("ChangePassword"), HttpPost]
+        public async Task<Result> ChangePassword([FromBody]ChangePasswordInput input)
+        {
+            using (var db = new ManageServerDbContext())
+            {
+                var userInfo = base.GetUserInfo();
+                var user = db.Users.FirstOrDefault(x => x.Id == userInfo.UserId);
+                user.Password = input.Password;
+                db.SaveChanges();
+            }
+            return Result.Ok();
+        }
     }
 }

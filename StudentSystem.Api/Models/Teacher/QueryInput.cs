@@ -1,13 +1,13 @@
 ﻿using StudentSystem.EntityFramework.Core;
 
-namespace StudentSystem.Api.Models.Student
+namespace StudentSystem.Api.Models.Teacher
 {
     public class QueryInput
     {
         /// <summary>
-        /// 学生编号
+        /// 教师编号
         /// </summary>
-        public string StudentNo { get; set; }
+        public string TeacherNo { get; set; }
 
         /// <summary>
         /// 姓名

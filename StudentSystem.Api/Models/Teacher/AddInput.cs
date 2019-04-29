@@ -1,23 +1,18 @@
 ﻿using StudentSystem.EntityFramework.Core;
 
-namespace StudentSystem.Api.Models.Student
+namespace StudentSystem.Api.Models.Teacher
 {
     public class AddInput
     {
         /// <summary>
-        /// 学生编号
+        /// 教师编号
         /// </summary>
-        public string StudentNo { get; set; }
+        public string TeacherNo { get; set; }
 
         /// <summary>
-        /// 应修学分
+        /// 教师级别
         /// </summary>
-        public int ShouldScore { get; set; }
-
-        /// <summary>
-        /// 实修学分
-        /// </summary>
-        public int RealScore { get; set; }
+        public TeacherRank TeacherRank { get; set; }
 
         /// <summary>
         /// 专业

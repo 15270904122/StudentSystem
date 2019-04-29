@@ -58,10 +58,10 @@ namespace StudentSystem.EntityFramework.Core
     public enum Gender
     {
         [Display(Name = "男")]
-        Admin = 1,
+        Male = 1,
 
         [Display(Name = "女")]
-        Student = 2,
+        Female = 2,
     }
 
     public enum UserType

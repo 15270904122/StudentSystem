@@ -68,11 +68,17 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -144,6 +150,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Claims\ManageServerClaimType.cs" />
+    <Compile Include="Controllers\Api\CourseController.cs" />
+    <Compile Include="Controllers\Api\ScheduleCourseController.cs" />
+    <Compile Include="Controllers\Api\TeacherController.cs" />
     <Compile Include="Controllers\Api\StudentController.cs" />
     <Compile Include="Controllers\Api\FileController.cs" />
     <Compile Include="Controllers\Api\AuthController.cs" />
@@ -157,10 +166,24 @@
     </Compile>
     <Compile Include="Map\AutoMap.cs" />
     <Compile Include="Map\AutoMapperProfile.cs" />
+    <Compile Include="Models\Auth\ChangePasswordInput.cs" />
+    <Compile Include="Models\Auth\ChangeUserInput.cs" />
     <Compile Include="Models\Auth\LoginInput.cs" />
     <Compile Include="Models\Auth\LoginOutput.cs" />
     <Compile Include="Models\Auth\UserInfo.cs" />
     <Compile Include="Models\File\FileResult.cs" />
+    <Compile Include="Models\Course\AddInput.cs" />
+    <Compile Include="Models\Course\QueryInput.cs" />
+    <Compile Include="Models\Course\QueryOutput.cs" />
+    <Compile Include="Models\Course\UpdateInput.cs" />
+    <Compile Include="Models\ScheduleCourse\AddInput.cs" />
+    <Compile Include="Models\ScheduleCourse\QueryInput.cs" />
+    <Compile Include="Models\ScheduleCourse\QueryOutput.cs" />
+    <Compile Include="Models\ScheduleCourse\UpdateInput.cs" />
+    <Compile Include="Models\Teacher\AddInput.cs" />
+    <Compile Include="Models\Teacher\QueryInput.cs" />
+    <Compile Include="Models\Teacher\QueryOutput.cs" />
+    <Compile Include="Models\Teacher\UpdateInput.cs" />
     <Compile Include="Models\Student\QueryInput.cs" />
     <Compile Include="Models\Student\QueryOutput.cs" />
     <Compile Include="Models\Student\UpdateInput.cs" />

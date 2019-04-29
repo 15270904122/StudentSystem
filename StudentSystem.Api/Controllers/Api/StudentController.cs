@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using StudentSystem.Api.Extensions;
-using StudentSystem.Api.Models.Auth;
 using StudentSystem.Api.Models.Student;
 using StudentSystem.EntityFramework;
 using StudentSystem.EntityFramework.Core;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web.Caching;
 using System.Web.Http;
 
 namespace StudentSystem.Api.Controllers.Api
@@ -41,7 +39,7 @@ namespace StudentSystem.Api.Controllers.Api
                 student.CreationTime = DateTime.Now;
                 student.StudentNo = input.StudentNo;
                 student.ShouldScore = input.ShouldScore;
-                student.RealScore = 0;
+                student.RealScore = input.RealScore;
                 student.Professional = input.Professional;
                 student.Users = new Users();
                 student.Users.CreationTime = DateTime.Now;
@@ -76,16 +74,11 @@ namespace StudentSystem.Api.Controllers.Api
                 {
                     return Result.FromError("学生不存在");
                 }
-                student.StudentNo = input.StudentNo;
                 student.ShouldScore = input.ShouldScore;
                 student.Professional = input.Professional;
                 student.Users.Email = input.Email;
-                student.Users.Gender = input.Gender;
-                student.Users.UserName = input.UserName;
                 student.Users.Phone = input.Phone;
-                student.Users.Password = input.Password;
-                student.Users.Name = input.Name;
-                student.Users.IdCard = input.IdCard;
+                student.ModifyTime = DateTime.Now;
                 await db.SaveChangesAsync();
             }
             return Result.Ok();
@@ -106,7 +99,13 @@ namespace StudentSystem.Api.Controllers.Api
                 {
                     return Result.FromError("学生不存在或已删除");
                 }
+                var studentSelectCourse = db.StudentSelectCourse.FirstOrDefault(x => x.StudentId == studentId);
+                if (studentSelectCourse != null)
+                {
+                    return Result.FromError("学生有选课不能删除");
+                }
                 student.IsDeleted = true;
+                student.ModifyTime = DateTime.Now;
                 student.Users.IsDeleted = true;
                 await db.SaveChangesAsync();
             }
@@ -140,6 +139,10 @@ namespace StudentSystem.Api.Controllers.Api
             if (!string.IsNullOrEmpty(input.Name))
             {
                 expression = expression.And(ent => ent.Users.Name.Contains(input.Name));
+            }
+            if (input.Professional != null)
+            {
+                expression = expression.And(ent => ent.Professional == input.Professional);
             }
             return expression;
         }

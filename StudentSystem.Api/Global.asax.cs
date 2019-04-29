@@ -13,6 +13,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Http.Cors;
+using System.Configuration;
 
 namespace StudentSystem.Api
 {
@@ -20,6 +22,7 @@ namespace StudentSystem.Api
     {
         protected void Application_Start()
         {
+            ConfigCors(GlobalConfiguration.Configuration);//配置跨域访问规则
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
@@ -42,9 +45,21 @@ namespace StudentSystem.Api
             {
                 AutoMapperHelper.CreateMap(type);
             }
-            AutoMapperHelper.Register();  
+            AutoMapperHelper.Register();
 
         }
+
+        private static void ConfigCors(HttpConfiguration config)
+        {
+            EnableCorsAttribute defaultProvider = null;
+            var origins = ConfigurationManager.AppSettings["Api:CorsOrigins"];
+            if (!string.IsNullOrWhiteSpace(origins))
+            {
+                defaultProvider = new EnableCorsAttribute(origins, "*", "*") { SupportsCredentials = true };
+            }
+            config.EnableCors(defaultProvider);
+        }
+
 
         #region JosnSetting
         private void ConfigJsonSettings()

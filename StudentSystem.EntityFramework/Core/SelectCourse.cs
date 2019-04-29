@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StudentSystem.EntityFramework.Core
 {
@@ -18,14 +18,14 @@ namespace StudentSystem.EntityFramework.Core
         public long TeacherId { get; set; }
 
         /// <summary>
-        /// 开始时间
+        /// 上课时间
         /// </summary>
-        public DateTime StartTime { get; set; }
+        public string Time { get; set; }
 
         /// <summary>
-        /// 结束时间
+        /// 周
         /// </summary>
-        public DateTime EndTime { get; set; }
+        public Week Week { get; set; }
 
         /// <summary>
         /// 是否可以开课
@@ -42,5 +42,22 @@ namespace StudentSystem.EntityFramework.Core
         /// </summary>
         public virtual Teachers Teachers { get; set; }
 
+    }
+    public enum Week
+    {
+        [Display(Name = "周一")]
+        One = 1,
+        [Display(Name = "周二")]
+        Two = 2,
+        [Display(Name = "周三")]
+        Three = 3,
+        [Display(Name = "周四")]
+        Four = 4,
+        [Display(Name = "周五")]
+        Five = 5,
+        [Display(Name = "周六")]
+        Six = 6,
+        [Display(Name = "周日")]
+        Seven = 7
     }
 }
