@@ -7,6 +7,9 @@ namespace StudentSystem.EntityFramework.Core
     /// </summary>
     public class Students : Entity<long>
     {
+        public Students()
+        {
+        }
         /// <summary>
         /// 学生编号
         /// </summary>
@@ -28,6 +31,7 @@ namespace StudentSystem.EntityFramework.Core
         /// </summary>
         public Professional Professional { get; set; }
 
+        public long UserId { get; set; }
         /// <summary>
         /// 用户信息
         /// </summary>

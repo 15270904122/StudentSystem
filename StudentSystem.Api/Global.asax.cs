@@ -42,7 +42,7 @@ namespace StudentSystem.Api
             {
                 AutoMapperHelper.CreateMap(type);
             }
-            AutoMapperHelper.Register();  //创建映射完毕后进行注册
+            AutoMapperHelper.Register();  
 
         }
 

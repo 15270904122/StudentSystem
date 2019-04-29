@@ -8,16 +8,16 @@ namespace StudentSystem.EntityFramework
 {
     public class ManageServerDbContext : DbContext
     {
-        public ManageServerDbContext() : base("name=Default")
+        public ManageServerDbContext() : base("Default")
         {
             Database.SetInitializer<ManageServerDbContext>(null);
         }
         public DbSet<Users> Users { get; set; }
-        public DbSet<Course> UserRole { get; set; }
-        public DbSet<SelectCourse> Roles { get; set; }
-        public DbSet<Students> Activities { get; set; }
-        public DbSet<StudentSelectCourse> ActivityMessages { get; set; }
-        public DbSet<Teachers> Volunteers { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<SelectCourse> SelectCourse { get; set; }
+        public DbSet<Students> Students { get; set; }
+        public DbSet<StudentSelectCourse> StudentSelectCourse { get; set; }
+        public DbSet<Teachers> Teachers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

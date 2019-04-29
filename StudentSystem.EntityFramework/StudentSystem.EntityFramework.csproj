@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\EntityOutput.cs" />
     <Compile Include="Core\StudentSelectCourse.cs" />
     <Compile Include="Core\SelectCourse.cs" />
     <Compile Include="Core\Entity.cs" />
@@ -81,6 +82,9 @@
     <EmbeddedResource Include="Migrations\201904270539023_InitialCreate.resx">
       <DependentUpon>201904270539023_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sql\CreateTable.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

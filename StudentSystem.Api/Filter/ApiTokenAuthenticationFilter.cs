@@ -17,7 +17,7 @@ using System.Web.Http.Filters;
 namespace StudentSystem.Api.Filter
 {
 
-    public class ApiTokenAuthenticationFilter : IAuthenticationFilter, IActionFilter
+    public class ApiTokenAuthenticationFilter : IAuthenticationFilter, IAuthorizationFilter
     {
 
 
@@ -37,7 +37,7 @@ namespace StudentSystem.Api.Filter
                || authenticationContext.ActionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any())
                 return;
             else if (!authenticationContext.Request.Headers.TryGetValues("Token", out var tokens))
-                authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "请求头缺少token信息").ToHttpResponseMessage();
+                authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "无效token").ToHttpResponseMessage();
             else
             {
                 string token = tokens.First();
@@ -45,7 +45,7 @@ namespace StudentSystem.Api.Filter
                 var userInfo = (UserInfo)cache.Get(token);
                 if (userInfo == null)
                 {
-                    authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "请求头缺少token信息").ToHttpResponseMessage();
+                    authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "无效token").ToHttpResponseMessage();
                 }
                 else
                 {
@@ -64,10 +64,12 @@ namespace StudentSystem.Api.Filter
             return Task.CompletedTask;
         }
 
-        public async Task<HttpResponseMessage> ExecuteActionFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
+        public async Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
         {
-            //actionContext.'
-
+            if (actionContext.Response != null)
+            {
+                return actionContext.Response;
+            }
             return await continuation();
         }
     }

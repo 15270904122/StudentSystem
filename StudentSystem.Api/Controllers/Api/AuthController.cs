@@ -24,14 +24,20 @@ namespace StudentSystem.Api.Controllers.Api
                 if (user != null)
                 {
                     var cache = new Cache();
-                    var token = new Guid().ToString();
+                    var token = Guid.NewGuid().ToString("N");
                     var userInfo = new UserInfo();
                     userInfo.UserType = user.UserType;
                     userInfo.Name = user.Name;
                     userInfo.UserId = user.Id;
                     userInfo.UserName = user.UserName;
                     cache.Insert(token, userInfo);
-                    return Result.Ok(token);
+                    LoginOutput loginOutput = new LoginOutput();
+                    loginOutput.Name = user.Name; 
+                    loginOutput.Token = token;
+                    loginOutput.UserId = user.Id;
+                    loginOutput.UserName = user.UserName;
+                    loginOutput.UserType = user.UserType;
+                    return Result.Ok(loginOutput);
                 }
                 else
                 {

@@ -144,9 +144,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Claims\ManageServerClaimType.cs" />
+    <Compile Include="Controllers\Api\StudentController.cs" />
     <Compile Include="Controllers\Api\FileController.cs" />
     <Compile Include="Controllers\Api\AuthController.cs" />
     <Compile Include="Controllers\Api\BaseApiController.cs" />
+    <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Filter\ApiTokenAuthenticationFilter.cs" />
     <Compile Include="Filter\ApiCookieAuthenticationFilter.cs" />
     <Compile Include="Filter\MvcCookieAuthenticationFilter.cs" />
@@ -156,8 +158,13 @@
     <Compile Include="Map\AutoMap.cs" />
     <Compile Include="Map\AutoMapperProfile.cs" />
     <Compile Include="Models\Auth\LoginInput.cs" />
+    <Compile Include="Models\Auth\LoginOutput.cs" />
     <Compile Include="Models\Auth\UserInfo.cs" />
     <Compile Include="Models\File\FileResult.cs" />
+    <Compile Include="Models\Student\QueryInput.cs" />
+    <Compile Include="Models\Student\QueryOutput.cs" />
+    <Compile Include="Models\Student\UpdateInput.cs" />
+    <Compile Include="Models\Student\AddInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,7 +200,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
-    <Folder Include="Models\Student\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

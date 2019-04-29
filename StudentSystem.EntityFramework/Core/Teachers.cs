@@ -23,6 +23,7 @@ namespace StudentSystem.EntityFramework.Core
         /// </summary>
         public Professional Professional { get; set; }
 
+        public long UserId { get; set; }
         /// <summary>
         /// 用户信息
         /// </summary>
