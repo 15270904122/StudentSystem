@@ -75,9 +75,14 @@ namespace StudentSystem.Api.Controllers.Api
         /// 登出
         /// </summary>
         /// <returns></returns>
-        [Route("Logout"), HttpGet]
+        [Route("Logout"), HttpGet, AllowAnonymous]
         public async Task<Result> Logout()
         {
+
+            using (var db = new ManageServerDbContext())
+            {
+                var user = db.Users.AsNoTracking().ToList();
+            }
             return Result.Ok();
         }
 

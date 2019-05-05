@@ -25,7 +25,7 @@ namespace StudentSystem.Api.Controllers.Api
         /// <param name="input"></param>
         /// <returns></returns>
         [Route("Add"), HttpPost]
-        public async Task<Result> Add([FromBody]AddInput input)
+        public async Task<Result> Add([FromBody]CourseAddInput input)
         {
             using (var db = new ManageServerDbContext())
             {
@@ -56,7 +56,7 @@ namespace StudentSystem.Api.Controllers.Api
         /// <param name="input"></param>
         /// <returns></returns>
         [Route("Update/{courseId}"), HttpPost]
-        public async Task<Result> Update(long courseId, [FromBody]UpdateInput input)
+        public async Task<Result> Update(long courseId, [FromBody]CourseUpdateInput input)
         {
             using (var db = new ManageServerDbContext())
             {
@@ -110,18 +110,18 @@ namespace StudentSystem.Api.Controllers.Api
         /// <param name="input"></param>
         /// <returns></returns>
         [Route("Query"), HttpPost]
-        public async Task<Result> Query([FromBody]QueryInput input)
+        public async Task<Result> Query([FromBody]CourseQueryInput input)
         {
             using (var db = new ManageServerDbContext())
             {
                 var courses = db.Course.Where(CourseExp(input)).ToList();
 
-                return Result.Ok(Mapper.Map<List<Course>, List<QueryOutput>>(courses));
+                return Result.Ok(Mapper.Map<List<Course>, List<CourseQueryOutput>>(courses));
 
             }
         }
 
-        private Expression<Func<Course, bool>> CourseExp(QueryInput input)
+        private Expression<Func<Course, bool>> CourseExp(CourseQueryInput input)
         {
             Expression<Func<Course, bool>> expression = ent => true;
 
