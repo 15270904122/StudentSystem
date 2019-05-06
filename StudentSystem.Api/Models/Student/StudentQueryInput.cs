@@ -2,7 +2,7 @@
 
 namespace StudentSystem.Api.Models.Student
 {
-    public class StudentQueryInput
+    public class StudentQueryInput : PagerInput
     {
         /// <summary>
         /// 学生编号

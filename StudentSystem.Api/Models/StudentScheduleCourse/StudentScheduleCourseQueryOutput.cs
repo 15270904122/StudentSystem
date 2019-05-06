@@ -1,10 +1,9 @@
-﻿using StudentSystem.Api.Models.Teacher;
-using StudentSystem.EntityFramework.Core;
+﻿using StudentSystem.EntityFramework.Core;
 using StudentSystem.Infrastructure.Extensions;
 
 namespace StudentSystem.Api.Models.ScheduleCourse
 {
-    public class ScheduleCourseQueryOutput : EntityOutput<long>
+    public class StudentScheduleCourseQueryOutput : EntityOutput<long>
     {
         /// <summary>
         /// 课程Id
@@ -32,11 +31,6 @@ namespace StudentSystem.Api.Models.ScheduleCourse
         public string WeekName => Week.DisplayName();
 
         /// <summary>
-        /// 是否可以开课
-        /// </summary>
-        public bool IsActive { get; set; }
-
-        /// <summary>
         /// 课程信息
         /// </summary>
         public StudentSystem.EntityFramework.Core.Course Course { get; set; }
@@ -44,6 +38,6 @@ namespace StudentSystem.Api.Models.ScheduleCourse
         /// <summary>
         /// 教师信息
         /// </summary>
-        public TeacherDto Teachers { get; set; }
+        public Teachers Teachers { get; set; }
     }
 }

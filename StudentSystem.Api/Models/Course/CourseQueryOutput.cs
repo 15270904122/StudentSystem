@@ -1,4 +1,5 @@
 ﻿using StudentSystem.EntityFramework.Core;
+using StudentSystem.Infrastructure.Extensions;
 
 namespace StudentSystem.Api.Models.Course
 {
@@ -15,11 +16,6 @@ namespace StudentSystem.Api.Models.Course
         public int Score { get; set; }
 
         /// <summary>
-        /// 时长
-        /// </summary>
-        public int Duration { get; set; }
-
-        /// <summary>
         /// 介绍
         /// </summary>
         public string Introduction { get; set; }
@@ -28,6 +24,11 @@ namespace StudentSystem.Api.Models.Course
         /// 专业
         /// </summary>
         public Professional Professional { get; set; }
+
+        /// <summary>
+        /// 专业
+        /// </summary>
+        public string ProfessionalName => Professional.DisplayName();
 
         /// <summary>
         /// 人数限制

@@ -63,7 +63,7 @@ namespace StudentSystem.Api.Controllers.Api
                 var selectCourse = db.SelectCourse.FirstOrDefault(x => selectCourseId == x.Id);
                 if (selectCourse == null)
                 {
-                    return Result.FromError("教师不存在");
+                    return Result.FromError("排课不存在");
                 }
                 selectCourse.CouresId = input.CouresId;
                 selectCourse.IsActive = input.IsActive;
@@ -114,13 +114,27 @@ namespace StudentSystem.Api.Controllers.Api
             using (var db = new ManageServerDbContext())
             {
                 var selectCourse = db.SelectCourse.Where(selectCourseExp(input)).ToList();
-                return Result.Ok(Mapper.Map<List<SelectCourse>, List<ScheduleCourseQueryOutput>>(selectCourse));
+                var pageResult = new PageResult<List<ScheduleCourseQueryOutput>>(input.CurrentPage, input.PageSize, selectCourse.Count);
+                selectCourse = selectCourse.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize).ToList();
+                pageResult.Data = Mapper.Map<List<SelectCourse>, List<ScheduleCourseQueryOutput>>(selectCourse);
+                return Result.Ok(pageResult);
             }
         }
 
         private Expression<Func<SelectCourse, bool>> selectCourseExp(ScheduleCourseQueryInput input)
         {
             Expression<Func<SelectCourse, bool>> expression = ent => true;
+
+            var userInfo = base.GetUserInfo();
+            if (userInfo.UserType == UserType.Teacher)
+            {
+                using (var db = new ManageServerDbContext())
+                {
+                    var teacher = db.Teachers.FirstOrDefault(x => x.UserId == userInfo.UserId);
+
+                    expression.And(ent => ent.TeacherId == teacher.Id);
+                }
+            }
             if (input.Week != null)
             {
                 expression = expression.And(ent => ent.Week == input.Week);

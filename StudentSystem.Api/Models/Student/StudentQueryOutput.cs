@@ -1,8 +1,5 @@
 ﻿using StudentSystem.EntityFramework.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using StudentSystem.Infrastructure.Extensions;
 
 namespace StudentSystem.Api.Models.Student
 {
@@ -26,6 +23,11 @@ namespace StudentSystem.Api.Models.Student
         /// 专业
         /// </summary>
         public Professional Professional { get; set; }
+
+        /// <summary>
+        /// 专业
+        /// </summary>
+        public string ProfessionalName => Professional.DisplayName();
 
         public long UserId { get; set; }
         /// <summary>

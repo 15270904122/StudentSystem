@@ -38,7 +38,6 @@ namespace StudentSystem.Api.Controllers.Api
                 course.IsDeleted = false;
                 course.CreationTime = DateTime.Now;
                 course.CourseName = input.CourseName;
-                course.Duration = input.Duration;
                 course.Professional = input.Professional;
                 course.Score = input.Score;
                 course.PersonLimit = input.PersonLimit;
@@ -66,7 +65,6 @@ namespace StudentSystem.Api.Controllers.Api
                     return Result.FromError("课程不存在");
                 }
                 course.CourseName = input.CourseName;
-                course.Duration = input.Duration;
                 course.Professional = input.Professional;
                 course.Score = input.Score;
                 course.Introduction = input.Introduction;
@@ -115,9 +113,10 @@ namespace StudentSystem.Api.Controllers.Api
             using (var db = new ManageServerDbContext())
             {
                 var courses = db.Course.Where(CourseExp(input)).ToList();
-
-                return Result.Ok(Mapper.Map<List<Course>, List<CourseQueryOutput>>(courses));
-
+                var pageResult = new PageResult<List<CourseQueryOutput>>(input.CurrentPage, input.PageSize, courses.Count);
+                courses = courses.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize).ToList();
+                pageResult.Data = Mapper.Map<List<Course>, List<CourseQueryOutput>>(courses);
+                return Result.Ok(pageResult);
             }
         }
 

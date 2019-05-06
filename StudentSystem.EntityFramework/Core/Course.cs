@@ -19,11 +19,6 @@ namespace StudentSystem.EntityFramework.Core
         public int Score { get; set; }
 
         /// <summary>
-        /// 时长
-        /// </summary>
-        public int Duration { get; set; }
-
-        /// <summary>
         /// 介绍
         /// </summary>
         [StringLength(500)]
@@ -38,6 +33,5 @@ namespace StudentSystem.EntityFramework.Core
         /// 人数限制
         /// </summary>
         public int PersonLimit { get; set; }
-
     }
 }

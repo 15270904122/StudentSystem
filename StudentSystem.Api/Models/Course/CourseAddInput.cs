@@ -15,11 +15,6 @@ namespace StudentSystem.Api.Models.Course
         public int Score { get; set; }
 
         /// <summary>
-        /// 时长
-        /// </summary>
-        public int Duration { get; set; }
-
-        /// <summary>
         /// 介绍
         /// </summary>
         public string Introduction { get; set; }

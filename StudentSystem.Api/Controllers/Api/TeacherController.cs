@@ -122,9 +122,10 @@ namespace StudentSystem.Api.Controllers.Api
             using (var db = new ManageServerDbContext())
             {
                 var teachers = db.Teachers.Where(TeachersExp(input)).ToList();
-
-                return Result.Ok(Mapper.Map<List<Teachers>, List<TeacherQueryOutput>>(teachers));
-
+                var pageResult = new PageResult<List<TeacherQueryOutput>>(input.CurrentPage, input.PageSize, teachers.Count);
+                teachers = teachers.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize).ToList();
+                pageResult.Data = Mapper.Map<List<Teachers>, List<TeacherQueryOutput>>(teachers);
+                return Result.Ok(pageResult);
             }
         }
 
