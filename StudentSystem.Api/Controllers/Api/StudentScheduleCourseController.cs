@@ -41,11 +41,20 @@ namespace StudentSystem.Api.Controllers.Api
                 {
                     return Result.Ok();
                 }
+
+                var selectCourse = db.SelectCourse.FirstOrDefault(x => x.Id == input.SelectCourseId);
+                var courseEntity = db.Course.FirstOrDefault(x => x.Id == selectCourse.CourseId);
+                var courseCount = db.SelectCourse.Where(x => x.CourseId == courseEntity.Id).Count();
+                if (courseCount >= courseEntity.PersonLimit)
+                {
+                    return Result.FromError("人数已上限");
+                }
                 studentSelectCourse = new StudentSelectCourse();
                 studentSelectCourse.IsDeleted = false;
                 studentSelectCourse.CreationTime = DateTime.Now;
                 studentSelectCourse.SelectCourseId = input.SelectCourseId;
                 studentSelectCourse.StudentId = student.Id;
+                student.RealScore += courseEntity.Score;
                 db.StudentSelectCourse.Add(studentSelectCourse);
                 await db.SaveChangesAsync();
             }
@@ -58,8 +67,8 @@ namespace StudentSystem.Api.Controllers.Api
         /// <param name="selectCourseId"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        [Route("Update/{selectCourseId}"), HttpPost]
-        public async Task<Result> Update(long selectCourseId)
+        [Route("Update"), HttpPost]
+        public async Task<Result> Update(StudentScheduleCourseUpdateInput studentScheduleCourseUpdateInput)
         {
             using (var db = new ManageServerDbContext())
             {
@@ -70,12 +79,20 @@ namespace StudentSystem.Api.Controllers.Api
                 }
                 var student = db.Students.FirstOrDefault(x => x.UserId == userInfo.UserId);
 
-                var studentSelectCourse = db.StudentSelectCourse.FirstOrDefault(x => selectCourseId == x.SelectCourseId && x.StudentId == student.Id);
+                var studentSelectCourse = db.StudentSelectCourse.FirstOrDefault(x => studentScheduleCourseUpdateInput.OldSelectCourseId == x.SelectCourseId && x.StudentId == student.Id);
                 if (studentSelectCourse == null)
                 {
                     return Result.FromError("排课不存在");
                 }
-                studentSelectCourse.SelectCourseId = selectCourseId;
+
+                var courseEntity = db.SelectCourse.FirstOrDefault(x => x.Id == studentScheduleCourseUpdateInput.OldSelectCourseId).Course;
+                var courseCount = db.SelectCourse.Where(x => x.CourseId == courseEntity.Id).Count();
+                if (courseCount >= courseEntity.PersonLimit)
+                {
+                    return Result.FromError("人数已上限");
+                }
+
+                studentSelectCourse.SelectCourseId = studentScheduleCourseUpdateInput.NewSelectCourseId;
                 studentSelectCourse.ModifyTime = DateTime.Now;
                 await db.SaveChangesAsync();
             }
@@ -106,6 +123,7 @@ namespace StudentSystem.Api.Controllers.Api
                 }
                 studentSelectCourse.IsDeleted = true;
                 studentSelectCourse.ModifyTime = DateTime.Now;
+                student.RealScore -= studentSelectCourse.SelectCourse.Course.Score;
                 await db.SaveChangesAsync();
             }
             return Result.Ok();
@@ -126,6 +144,33 @@ namespace StudentSystem.Api.Controllers.Api
                 selectCourse = selectCourse.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize).ToList();
                 pageResult.Data = Mapper.Map<List<SelectCourse>, List<ScheduleCourseQueryOutput>>(selectCourse.Select(x => x.SelectCourse).ToList());
                 return Result.Ok(pageResult);
+            }
+        }
+
+        /// <summary>
+        /// 选修套餐
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Route("SelectSetMeal"), HttpGet]
+        public async Task<Result> SelectSetMeal()
+        {
+            //获取当前学生选课信息，学分差数，
+            //获取当前学生专业、学分排序、时间不冲突的前几位（学分之和大于学分差值）
+            using (var db = new ManageServerDbContext())
+            {
+                var userInfo = base.GetUserInfo();
+                if (userInfo.UserType != UserType.Student)
+                {
+                    return Result.FromError("只有学生才有选修套餐");
+                }
+                var student = db.Students.FirstOrDefault(x => x.UserId == userInfo.UserId);
+
+                var studentSelectCourse = db.StudentSelectCourse.Where(x => x.StudentId == student.Id).ToList();
+                var currentScore = student.RealScore;
+                var selectCourseId = studentSelectCourse.Select(x => x.SelectCourseId).ToList();
+                var selectCourseEntities = db.SelectCourse.Where(x => x.Course.Professional == student.Professional && !selectCourseId.Contains(x.Id)).OrderByDescending(x => x.Course.Score).ToList();
+                return Result.Ok(Mapper.Map<List<SelectCourse>, List<ScheduleCourseQueryOutput>>(selectCourseEntities));
             }
         }
 

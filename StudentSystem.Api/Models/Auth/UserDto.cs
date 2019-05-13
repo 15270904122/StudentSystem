@@ -1,5 +1,6 @@
 ﻿using StudentSystem.Api.Map;
 using StudentSystem.EntityFramework.Core;
+using StudentSystem.Infrastructure.Extensions;
 
 namespace StudentSystem.Api.Models.Auth
 {
@@ -27,6 +28,11 @@ namespace StudentSystem.Api.Models.Auth
         public Gender Gender { get; set; }
 
         /// <summary>
+        /// 性别
+        /// </summary>
+        public string GenderName => Gender.DisplayName();
+
+        /// <summary>
         /// 邮箱
         /// </summary>
         public string Email { get; set; }
@@ -45,5 +51,10 @@ namespace StudentSystem.Api.Models.Auth
         /// 用户类型
         /// </summary>
         public UserType UserType { get; set; }
+
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        public string UserTypeName => UserType.DisplayName();
     }
 }

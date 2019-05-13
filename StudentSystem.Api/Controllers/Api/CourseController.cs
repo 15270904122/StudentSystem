@@ -90,7 +90,7 @@ namespace StudentSystem.Api.Controllers.Api
                 {
                     return Result.FromError("课程不存在或已删除");
                 }
-                var selectCourse = db.SelectCourse.FirstOrDefault(x => x.CouresId == courseId);
+                var selectCourse = db.SelectCourse.FirstOrDefault(x => x.CourseId == courseId);
                 if (selectCourse != null)
                 {
                     return Result.FromError("有排课不能删除");

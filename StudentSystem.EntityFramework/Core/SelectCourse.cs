@@ -10,7 +10,7 @@ namespace StudentSystem.EntityFramework.Core
         /// <summary>
         /// 课程Id
         /// </summary>
-        public long CouresId { get; set; }
+        public long CourseId { get; set; }
 
         /// <summary>
         /// 教师Id
@@ -30,7 +30,7 @@ namespace StudentSystem.EntityFramework.Core
         /// <summary>
         /// 是否可以开课
         /// </summary>
-        public bool IsActive { get; set; }
+        public IsActive IsActive { get; set; }
 
         /// <summary>
         /// 课程信息
@@ -43,6 +43,15 @@ namespace StudentSystem.EntityFramework.Core
         public virtual Teachers Teachers { get; set; }
 
     }
+    public enum IsActive
+    {
+        [Display(Name = "是")]
+        Yes = 1,
+        [Display(Name = "否")]
+        No = 2,
+
+    }
+
     public enum Week
     {
         [Display(Name = "周一")]
@@ -60,4 +69,5 @@ namespace StudentSystem.EntityFramework.Core
         [Display(Name = "周日")]
         Seven = 7
     }
+
 }

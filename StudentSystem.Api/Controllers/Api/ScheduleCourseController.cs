@@ -29,7 +29,7 @@ namespace StudentSystem.Api.Controllers.Api
         {
             using (var db = new ManageServerDbContext())
             {
-                var user = db.SelectCourse.FirstOrDefault(x => x.CouresId == input.CouresId && x.Week == input.Week && x.Time == input.Time);
+                var user = db.SelectCourse.FirstOrDefault(x => x.CourseId == input.CourseId && x.Week == input.Week && x.Time == input.Time);
                 if (user != null)
                 {
                     return Result.FromError("课程已排课");
@@ -38,7 +38,7 @@ namespace StudentSystem.Api.Controllers.Api
                 var selectCourse = new SelectCourse();
                 selectCourse.IsDeleted = false;
                 selectCourse.CreationTime = DateTime.Now;
-                selectCourse.CouresId = input.CouresId;
+                selectCourse.CourseId = input.CourseId;
                 selectCourse.IsActive = input.IsActive;
                 selectCourse.Time = input.Time;
                 selectCourse.TeacherId = input.TeacherId;
@@ -65,7 +65,7 @@ namespace StudentSystem.Api.Controllers.Api
                 {
                     return Result.FromError("排课不存在");
                 }
-                selectCourse.CouresId = input.CouresId;
+                selectCourse.CourseId = input.CourseId;
                 selectCourse.IsActive = input.IsActive;
                 selectCourse.Time = input.Time;
                 selectCourse.TeacherId = input.TeacherId;

@@ -79,6 +79,7 @@ namespace StudentSystem.Api.Controllers.Api
                 student.Users.Email = input.Email;
                 student.Users.Phone = input.Phone;
                 student.ModifyTime = DateTime.Now;
+                student.RealScore = input.RealScore;
                 await db.SaveChangesAsync();
             }
             return Result.Ok();

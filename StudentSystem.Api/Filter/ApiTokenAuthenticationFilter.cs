@@ -37,7 +37,7 @@ namespace StudentSystem.Api.Filter
                || authenticationContext.ActionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any())
                 return;
             else if (!authenticationContext.Request.Headers.TryGetValues("Token", out var tokens))
-                authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "无效token").ToHttpResponseMessage();
+                authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "未登录").ToHttpResponseMessage();
             else
             {
                 string token = tokens.First();
@@ -45,7 +45,7 @@ namespace StudentSystem.Api.Filter
                 var userInfo = (UserInfo)cache.Get(token);
                 if (userInfo == null)
                 {
-                    authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "无效token").ToHttpResponseMessage();
+                    authenticationContext.ActionContext.Response = Result.FromCode(ResultCode.Unauthorized, "未登录").ToHttpResponseMessage();
                 }
                 else
                 {

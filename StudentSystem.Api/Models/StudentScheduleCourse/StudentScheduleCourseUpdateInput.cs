@@ -5,6 +5,11 @@
         /// <summary>
         /// 选课id
         /// </summary>
-        public long SelectCourseId { get; set; }
+        public long OldSelectCourseId { get; set; }
+
+        /// <summary>
+        /// 选课id
+        /// </summary>
+        public long NewSelectCourseId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace StudentSystem.Api.Models.ScheduleCourse
         /// <summary>
         /// 课程Id
         /// </summary>
-        public long CouresId { get; set; }
+        public long CourseId { get; set; }
 
         /// <summary>
         /// 教师Id
@@ -27,6 +27,6 @@ namespace StudentSystem.Api.Models.ScheduleCourse
         /// <summary>
         /// 是否可以开课
         /// </summary>
-        public bool IsActive { get; set; }
+        public IsActive IsActive { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace StudentSystem.Api
             httpConfiguration.Filters.Add(new ApiTokenAuthenticationFilter());
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            //  RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             httpConfiguration.EnsureInitialized();
 
