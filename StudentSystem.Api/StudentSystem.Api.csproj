@@ -259,6 +259,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="系统部署文档.txt" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -335,6 +336,7 @@
     <Content Include="selectCourse-manager\static\js\calendar.js" />
     <Content Include="selectCourse-manager\static\js\calendar.min.js" />
     <Content Include="selectCourse-manager\static\js\main.6a02988869d8e79747f9.js" />
+    <Content Include="selectCourse-manager\static\js\main.a42ae48b50c1b1c80154.js" />
     <Content Include="selectCourse-manager\static\js\main.e2877a7a23c669101c74.js" />
     <Content Include="selectCourse-manager\static\js\main.fa783201d65ce8b46d12.js" />
     <Content Include="selectCourse-manager\static\js\manifest.a07fa8bb52e1a9bf1eb5.js" />
@@ -427,6 +429,7 @@
     <Content Include="selectCourse-manager\static\js\manifest.c0045d2e8955d5aaa6d5.js.map" />
     <Content Include="selectCourse-manager\static\js\vendor.6817223aba1368f64130.js.map" />
     <Content Include="selectCourse-manager\static\js\main.e2877a7a23c669101c74.js.map" />
+    <Content Include="selectCourse-manager\static\js\main.a42ae48b50c1b1c80154.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

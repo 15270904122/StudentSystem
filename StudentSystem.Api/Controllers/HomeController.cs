@@ -7,7 +7,7 @@ namespace StudentSystem.Api.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect("/selectCourse-manager");
+            return Redirect("/selectCourse-manager/#/");
         }
     }
 }
